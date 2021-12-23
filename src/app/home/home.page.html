@@ -1,0 +1,118 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Project
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Project</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-item>
+        <ion-input placeholder="ID" type="text" [(ngModel)] = "studentID" required> Enter Student:&nbsp; </ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input placeholder="Assignment Score" type="text" [(ngModel)] = "assignment" value = "0"> Enter Assignment Score:&nbsp; </ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input placeholder="Midterm Score" type="text" [(ngModel)] = "midterm" value = "0"> Enter Midterm Score:&nbsp; </ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input placeholder="Final Score" type="text" [(ngModel)] = "final" value = "0"> Enter Final Score:&nbsp; </ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="postScore()">Submit</ion-button>
+    
+    <ion-item>
+        <ion-input placeholder="Score" type="text" [(ngModel)] = "OC" required> Enter Oversatisfied Criteria:&nbsp; </ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input placeholder="Score" type="text" [(ngModel)] = "SC" required> Enter Satisfied Criteria:&nbsp; </ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="getAllGrades()">Submit</ion-button>
+    
+    <div *ngIf = "dataScores$ | async as wdt">
+        <ion-card>
+            <b>The number of students for each criteria</b>
+            <ion-card-content>
+                <b>O</b>: {{wdt.cnt[0]}} <br>
+                <b>S</b>: {{wdt.cnt[1]}} <br>
+                <b>U</b>: {{wdt.cnt[2]}} <br>
+                <b>Average</b>: {{wdt.avg}} <br>
+                <b>Standard Deviation</b>: {{wdt.std}} <br>
+            </ion-card-content>
+        </ion-card>
+        <div *ngFor = "let d of wdt.data">
+            <ion-card>
+                <ion-card-content>
+                    <b>ID</b>: {{d.id}} <br>
+                    <b>Overall Score</b>: {{d.score}} <br>
+                    <b>Grade</b>: {{d.grade}}
+                </ion-card-content>
+            </ion-card>
+        </div>   
+    </div> 
+
+    <ion-item>
+        <ion-input placeholder="Min" type="text" [(ngModel)] = "min" required> Enter Minimum Score:&nbsp; </ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input placeholder="Max" type="text" [(ngModel)] = "max" required> Enter Maximum Score:&nbsp; </ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="getByRange()">Submit</ion-button>
+    <div *ngIf = "dataRange$ | async as wdt">
+        <ion-card>
+            <b>Criteria</b>
+            <ion-card-content>
+                <b>O</b>: more than or equal {{wdt.criteria[0]}} <br>
+                <b>S</b>: [{{wdt.criteria[1]}},{{wdt.criteria[0]}}) <br>
+                <b>U</b>: less than {{wdt.criteria[1]}} <br>
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <div *ngFor = "let d of wdt.data">
+                <ion-card-content>
+                    <b>Student ID: </b> {{d.id}} <br>
+                    <b>Assignment: </b> {{d.assignment}} <br>
+                    <b>Midterm: </b> {{d.midterm}} <br>
+                    <b>Final: </b> {{d.final}} <br>
+                    <b>Total Score:</b> {{d.totalScore}} <br>
+                    <b>Grade: </b> {{d.grade}} <br>
+                </ion-card-content>
+            </div>
+        </ion-card>
+    </div>
+
+    <ion-item>
+        <ion-input placeholder="ID(s)" type="text" [(ngModel)] = "ids" required> Enter ID(s):&nbsp; </ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="getPerson()">Submit</ion-button>
+    <div *ngIf = "dataPerson$ | async as wdt">
+        <ion-card>
+            <b>Criteria</b>
+            <ion-card-content>
+                <b>O</b>: more than or equal {{wdt.criteria[0]}} <br>
+                <b>S</b>: [{{wdt.criteria[1]}},{{wdt.criteria[0]}}) <br>
+                <b>U</b>: less than {{wdt.criteria[1]}} <br>
+            </ion-card-content>
+        </ion-card>
+        <!-- <ion-card>
+            <div *ngFor = "let d of wdt.data">
+                <ion-card-content>
+                    <b>Student ID: </b> {{d.id}} <br>
+                    <b>Assignment: </b> {{d.assignment}} <br>
+                    <b>Midterm: </b> {{d.midterm}} <br>
+                    <b>Final: </b> {{d.final}} <br>
+                    <b>Total Score:</b> {{d.totalScore}} <br>
+                    <b>Grade: </b> {{d.grade}} <br>
+                </ion-card-content>
+            </div>
+        </ion-card> -->
+    </div>
+</ion-content>
+
+
